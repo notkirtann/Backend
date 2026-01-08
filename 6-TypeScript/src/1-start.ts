@@ -5,7 +5,6 @@ const name:string = "Kirtan";
 console.log(greet(name));
 
 
-
 // -----------------Type Infercencing---------------------------
 let chai = "Chai aur code" // type inferncing automatic smjh jaayega
 let cups = Math.random()
@@ -36,9 +35,10 @@ const orders =["11",'22','33','44']
 let currentOrder:string | undefined ;
 
 for(let order of orders){
-    if(order === '33')
+    if(order === '33'){
         currentOrder = order;
         break;
+    }
 }
 
 console.log(currentOrder)

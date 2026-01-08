@@ -59,7 +59,7 @@ TS -->(Addon) Proccess --> JS --> Browser/Node.js
     - Creates .map files for source mapping and debugging.
     ##### Note: Node.js just add emitter step to execute the TypeScript code.
 
-### Type Annotations and Inference:
+## Type Annotations and Inference:
 Type Annotations: Explicitly specify types for variables, function parameters, and return values.
 Example:
 ```typescript
@@ -79,7 +79,7 @@ let age = 25; // inferred as number
 let name = "Alice"; // inferred as string
 ```
 
-### Union-And-Any Types:
+## Union-And-Any Types:
 Union Types: Allow variables to hold values of multiple types.
 Example:
 ```typescript
@@ -114,7 +114,7 @@ In this example, `currentOrder` can either be a `string` or `undefined`, accommo
 Why should we avoid `any` type?
 Using the `any` type can lead to potential runtime errors and defeats the purpose of using TypeScript's static typing. It is generally recommended to use more specific types or union types to maintain type safety and improve code quality.
 
-### Type Guards and Unkown-Any :
+## Type Guards and Type Narrowing:
 Type Guards: Type guards are runtime checks that allow you to narrow down the type of a variable within a specific scope.
 
 Example:
@@ -146,3 +146,146 @@ function processUnknown(value: unknown) {
 }
 ```
 In this example, the `processUnknown` function safely handles a value of type `unknown` by performing type checks before using it.
+
+### Type Narrowing:
+Type Narrowing: Type narrowing is the process of refining the type of a variable based on control flow analysis. TypeScript automatically narrows types when it can determine more specific types based on conditions.
+Example:
+```typescript
+function getChai(kind: string | number){
+    if(typeof kind ==='string'){
+    return `Making tea with ${kind} tea leaves.`;
+    } else {
+    return `Making tea with ${kind} grams of tea powder.`;
+    }
+}
+console.log(getChai("green")); // Making tea with green tea leaves.`
+console.log(getChai(50)); // Making tea with 50 grams of tea powder.
+```
+```typescript
+// let msg:'green Tea' | 'Choclate Tea' | 'Ginger Tea'
+function orderName(msg?:string){
+    if(msg){
+        return `Serving ${msg}`
+    }else{
+        return `Serving default Masala Chai`
+    }
+}
+// msg = 'green Tea'
+console.log(orderName());
+```
+### Type Guards with Classes:
+```typescript
+class KulhadCHai {
+    prepare() {
+        return "Preparing Kulhad Chai";
+    }
+}
+class GlassChai {
+    prepare() {
+        return "Preparing Glass Chai";
+    }
+}
+function prepare(chai: KulhadCHai | GlassChai){
+    if(chai instanceof KulahadCHai){
+        return chai.prepare()
+    }else if(chai instanceof GlassChai){
+        return chai.prepare()
+    }else{
+        const _exhaustiveCheck: never = chai;
+        return _exhaustiveCheck;
+    }
+}
+```
+#### Creating Custom Type Guards:
+```typescript
+type ChaiOrder ={
+    type : string,
+    sugar : number
+}
+function isChaiOrder(obj:any):obj is ChaiOrder{
+    return (
+        typeof obj ==="object" && obj != null && typeof obj.type ==='string' && typeof obj.sugar ==='number'
+    )
+}
+
+function serveOrder(item:ChaiOrder){
+    if(isChaiOrder(item)){
+        return `Serving ${item.type} Chai with Sugar ${item.sugar} gm.`
+    }
+}
+```
+In this example, the `isChaiOrder` function is a custom type guard that checks if an object conforms to the `ChaiOrder` type.
+
+## Type Assertions:
+Type Assertions: Type assertions allow you to override TypeScript's inferred type and specify a more specific type for a variable. This is useful when you have more information about the type than TypeScript can infer.
+Example:
+```typescript
+let someValue: unknown = "Hello, TypeScript!";
+let strLength: number = (someValue as string).length;
+console.log(`String length: ${strLength}`);
+```
+In this example, we assert that `someValue` is of type `string` before accessing its `length` property. This allows us to safely use string methods on a variable initially typed as `unknown`.
+
+Example:
+```typescript
+type Book ={
+    name:string
+}
+let bookString = '{"name":"Think and Win Like MS Dhoni"}'
+let bookObject = JSON.parse(bookString) as Book
+
+console.log(bookObject.name);
+```
+In this example, we parse a JSON string and assert that the resulting object conforms to the `Book` type, allowing us to access the `name` property safely.
+
+example:
+```typescript
+const inputElement = document.getElementById("username")as HTMLInputElement
+inputElement.value = "NewUser";
+console.log(inputElement.value);
+```
+In this example, we assert that the element retrieved by `getElementById` is an `HTMLInputElement`, allowing us to access the `value` property specific to input elements.
+
+### Unkown vs Any:
+```typescript
+
+let value:any
+value = 'hello'
+value = 1234
+value = [1,2,3]
+value.toUpperCase() //-----> no error
+
+
+let newValue:unknown
+newValue = 'hello'
+newValue = 1234
+newValue = [1,2,3]
+// newValue.toUpperCase() //-----> error  
+
+if(typeof newValue ==='string'){
+    newValue.toUpperCase()
+}
+
+```
+In this example, using `any` allows for any operation without type checking, which can lead to runtime errors. In contrast, `unknown` requires type checks before performing operations, enhancing type safety.
+
+Example:
+```typescript
+type Role = 'admin' | 'user' | 'superadmin'
+
+function redirectTo(role:Role):void{
+    if(role==='admin'){
+        console.log(`redirect to ${role} page`);
+        return;
+    }
+    if(role==='user'){
+        console.log(`redirect to ${role} page`);
+        return;
+    }
+    role;
+}
+redirectTo('admin');
+```
+In this example, the `redirectTo` function uses exhaustive checks to ensure all possible `Role` values are handled. If a new role is added in the future, TypeScript will raise an error if it's not accounted for in the function, helping to maintain code correctness.
+
+Here third role 'superadmin' is not handled in the function. So, TypeScript will raise an error at the line `role;` indicating that not all cases are covered. This helps in maintaining code correctness and ensures that all possible values of the `Role` type are handled appropriately.

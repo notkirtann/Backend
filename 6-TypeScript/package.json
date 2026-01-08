@@ -4,9 +4,9 @@
   "description": "",
   "main": "problemWithJS.js",
   "scripts": {
-    "start": "node ./dist/start.js",
+    "start": "node ./dist/1-start.js",
     "dev":"npx tsc",
-    "comp": "npx ts-node ./src/start.ts" 
+    "comp": "npx ts-node ./src/1-start.ts" 
   },
   "keywords": [],
   "author": "",
