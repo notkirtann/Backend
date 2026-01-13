@@ -17,6 +17,7 @@ console.log(greet(42)); // Output Hello,42
 In the above example, passing a number to the `greet` function leads to unexpected behavior.
 TypeScript solution:
 By adding type annotations, TypeScript can catch type-related errors at compile time.
+
 example:
 ```typescript
 function greet(name: string): string {
@@ -61,6 +62,7 @@ TS -->(Addon) Proccess --> JS --> Browser/Node.js
 
 ## Type Annotations and Inference:
 Type Annotations: Explicitly specify types for variables, function parameters, and return values.
+
 Example:
 ```typescript
 let age: number = 25;
@@ -73,6 +75,7 @@ Types of Annotations:
 - Object Types: `object`, `Array`, `Tuple`, `Enum`
 
 Type Inference: TypeScript automatically infers types based on the assigned values.
+
 Example:
 ```typescript
 let age = 25; // inferred as number
@@ -81,6 +84,7 @@ let name = "Alice"; // inferred as string
 
 ## Union-And-Any Types:
 Union Types: Allow variables to hold values of multiple types.
+
 Example:
 ```typescript
 let value: string | number;
@@ -89,6 +93,7 @@ value = 42; // valid
 ```
 
 Any Type: A type that can hold any value, effectively opting out of type checking.
+
 Example:
 ```typescript
 let apiRequestStatus : 'pending' | 'success' | 'error' = "pending";
@@ -133,6 +138,7 @@ function processValue(value: string | number) {
 }
 ```
 Unknown Type: The `unknown` type is a safer alternative to `any`. It represents a value that could be of any type, but unlike `any`, you must perform type checks before performing operations on it.
+
 Example:
 ```typescript
 function processUnknown(value: unknown) {
@@ -149,6 +155,7 @@ In this example, the `processUnknown` function safely handles a value of type `u
 
 ### Type Narrowing:
 Type Narrowing: Type narrowing is the process of refining the type of a variable based on control flow analysis. TypeScript automatically narrows types when it can determine more specific types based on conditions.
+
 Example:
 ```typescript
 function getChai(kind: string | number){
@@ -218,6 +225,7 @@ In this example, the `isChaiOrder` function is a custom type guard that checks i
 
 ## Type Assertions:
 Type Assertions: Type assertions allow you to override TypeScript's inferred type and specify a more specific type for a variable. This is useful when you have more information about the type than TypeScript can infer.
+
 Example:
 ```typescript
 let someValue: unknown = "Hello, TypeScript!";
@@ -395,6 +403,7 @@ Cfg.name="MaiKirtanHoon" //---> Error: Cannot assign to 'name' because it is a r
 
 ##Objects in TypeScript:
 Objects in TypeScript: Objects in TypeScript can be defined using types or interfaces, allowing for structured data representation with type safety.
+
 Example using Type:
 ```typescript
 let Tea: {
@@ -476,6 +485,7 @@ const RealMadrid:club={
 In this example, we define the structure of the `Tea` object directly and use a `club` type to define the structure of the `RealMadrid` object. This ensures that both objects adhere to the specified types, providing type safety and clarity in the code.
 ### Structural Typing in TypeScript:
 Structural Typing: TypeScript uses structural typing, meaning that compatibility between types is determined by their structure (i.e., the properties they have) rather than their explicit declarations.
+
 Example:
 ```typescript
 type Club ={
@@ -548,6 +558,7 @@ In this example, we demonstrate the use of utility types `Partial`, `Required`, 
 
 ## Functions in TypeScript:
 Functions in TypeScript: Functions in TypeScript can have typed parameters and return types, providing type safety and clarity in function definitions.
+
 Example:
 ```typescript
 function buyPlayer(club:string,value:number):string{
@@ -575,6 +586,7 @@ In this example, the `buyPlayer` function takes a `string` and a `number` as par
 ## Array, Enum and Tuple in TypeScript:
 ### Arrays
 Arrays in TypeScript: Arrays in TypeScript can be defined with specific element types, ensuring type safety for array operations.
+
 Example:
 ```typescript
 const players:string[] = ["Cristiano","Sergio"]
@@ -603,6 +615,7 @@ In this example, we define arrays with specific element types, such as `string[]
 
 ### Enums
 Enums in TypeScript: Enums in TypeScript are a way to define a set of named constants, making code more readable and maintainable.
+
 Examples:
 ```typescript
 enum bestClub{
@@ -641,6 +654,7 @@ enum playerData { //@ not a good practise to create a hetrogenous value enums
 
 ### Tuples
 Tuples in TypeScript: Tuples in TypeScript are a way to define an array with a fixed number of elements, where each element can have a different type.
+
 Examples:
 ```typescript
 let playerTuple:[string,number] =["a",1]
@@ -659,6 +673,7 @@ In this example, we define a tuple `playerTuple` with a `string` and a `number`,
 Object-Oriented Programming (OOP) in TypeScript: TypeScript supports OOP principles such as classes, inheritance, encapsulation, and polymorphism, allowing for structured and reusable code.
 ### Classes
 Classes in TypeScript: Classes in TypeScript are blueprints for creating objects, encapsulating data and behavior.
+
 Example:
 ```typescript
 class Club {
@@ -679,6 +694,7 @@ In this example, we define a `Club` class with properties `name` and `found`, al
 
 ### Excess Modifiers
 Access Modifiers in TypeScript: Access modifiers in TypeScript control the visibility of class members (properties and methods) to enforce encapsulation.
+
 Example:
 ```typescript
 class Player{  
@@ -752,6 +768,7 @@ In this example, the `Stadium` class has a `capacity` property that is marked as
 
 ### Static Members
 Static Members in TypeScript: Static members in TypeScript are properties or methods that belong to the class itself rather than to instances of the class.
+
 Example:
 ```typescript
 class PSG{
@@ -766,6 +783,7 @@ In this example, the `PSG` class has a static property `name` that holds the nam
 
 ### Abstract Class
 Abstract Classes in TypeScript: Abstract classes in TypeScript are classes that cannot be instantiated directly and are meant to be extended by other classes. They can contain abstract methods that must be implemented by derived classes.
+
 Example:
 ```typescript
 abstract class Drink{
@@ -783,6 +801,7 @@ In this example, the `Drink` class is declared as abstract and contains an abstr
 
 ### Composition Cocept
 Composition in TypeScript: Composition is a design principle where classes are built by combining simpler, reusable components rather than relying solely on inheritance. This promotes flexibility and code reuse.
+
 Example:
 ```typescript
 class Engine{
@@ -807,3 +826,195 @@ class Car{
 In this example, the `Engine` class represents a simple component with a `start()` method. The `Car` class composes an instance of the `Engine` class, allowing it to use the engine's functionality through the `drive()` method. This approach promotes code reuse and flexibility, as different types of engines can be used with the `Car` class without needing to create a complex inheritance hierarchy.
 
 ## Interfaces and Generics in TypeScript:
+
+### Interfaces
+Interfaces in TypeScript: Interfaces in TypeScript define the shape of objects and can be implemented by classes to enforce a contract.
+
+Example: 1
+```typescript
+interface Chai{
+    flavour:string
+    price:number
+    milk?:boolean
+}
+
+const chai:Chai={
+    flavour:"choclate",
+    price:20
+}
+console.log(chai);
+```
+Example: 2
+```typescript
+interface Shop{
+    readonly id:number
+    name: string
+}
+const s:Shop={
+    id:1,
+    name:"siuuuuu"
+}
+// s.id = 2 //@readonly interface
+```
+
+Example: 3
+```typescript
+interface DiscountCalculator{
+    (price:number):number
+}
+const apply50:DiscountCalculator= (p)=>p*0.5
+```
+Example: 4
+```typescript
+interface TeaMachine{
+    start(price:number):void
+    stop():void
+}
+const machine:TeaMachine={
+    start(price:number){
+        console.log("siuuuu");
+    },
+    stop() {
+        console.log("le bhai system");
+    },
+}
+```
+In this example, we define an interface `Chai` that specifies the properties of a chai object, including an optional `milk` property. We then create an object `chai` that adheres to this interface. The second example demonstrates a `Shop` interface with a readonly `id` property, preventing modifications after initialization. The third example shows a function interface `DiscountCalculator`, which defines the signature for functions that calculate discounts based on price. The fourth example illustrates a `TeaMachine` interface with methods `start` and `stop`, and we create an object `machine` that implements this interface. These examples showcase how interfaces in TypeScript help define contracts for objects and functions, promoting type safety and code clarity.
+
+#### Index Signatures
+Index Signatures in TypeScript: Index signatures in TypeScript allow you to define the types of properties that are not known at compile time, enabling dynamic property names in objects.
+
+Example: 
+```typescript
+interface PlayerName{
+    [name:string]:number
+}
+const playerNumber:PlayerName={
+    valverde:8,
+    modric:10,
+    cr7:7,
+    ramos:4
+}
+```
+In this example, the `PlayerName` interface uses an index signature to indicate that any property with a `string` key will have a `number` value. The `playerNumber` object adheres to this interface, allowing dynamic property names for player names and their corresponding jersey numbers. This feature is useful when dealing with objects that may have varying property names while still enforcing type safety for the values associated with those properties.
+
+#### Multiple interface with same name
+Example: 
+```typescript
+interface User{
+    name:string
+}
+interface User{
+    age:number
+}
+
+const u:User={
+    name:"kirtan",
+    age:23
+}
+```
+In this example, we define two interfaces with the same name `User`. TypeScript automatically merges these interfaces, resulting in a single `User` interface that includes both the `name` and `age` properties. The object `u` adheres to this merged interface, demonstrating how TypeScript supports declaration merging for interfaces. This feature allows for more flexible and modular code, as different parts of the codebase can contribute to the same interface definition.
+
+#### Merging vs Extending Interfaces
+Merging vs Extending Interfaces in TypeScript: Merging interfaces combines multiple declarations of the same interface into one, while extending interfaces creates a new interface that inherits properties from one or more existing interfaces.
+
+Example of Merging:
+```typescript
+interface Team{
+    name:string
+}
+interface Team{
+    rank:number
+}
+const rm:Team={
+    name:"Real Madrid",
+    rank:1
+}
+```
+In this example, we define two interfaces with the same name `Team`. TypeScript merges these interfaces into a single `Team` interface that includes both the `name` and `rank` properties. The object `rm` adheres to this merged interface.
+
+Example of Extending:
+```typescript
+interface Club{
+    name:string
+}
+interface FootballClub extends Club{
+    league:string
+}
+const fcb:FootballClub={
+    name:"FC Barcelona",
+    league:"La Liga"
+}
+```
+In this example, the `FootballClub` interface extends the `Club` interface, inheriting its `name` property and adding a new `league` property. The object `fcb` adheres to the `FootballClub` interface, demonstrating how extending interfaces allows for the creation of more specialized types based on existing ones.
+##### Merging two interface into the third
+```typescript
+interface A{a:string}
+interface B{b:string}
+
+interface C extends A,B{
+    c:string
+}
+const c:C={
+    a:"hola",
+    b:"Danke",
+    c:"hello"
+}
+```
+In this example, we define two interfaces `A` and `B`, each with a single property. The `C` interface extends both `A` and `B`, inheriting their properties and adding its own property `c`. The object `c` adheres to the `C` interface, demonstrating how interfaces can be merged through extension to create more complex types.
+
+### Generics
+Generics in TypeScript: Generics in TypeScript allow you to create reusable components that can work with different data types while maintaining type safety.
+
+Example: 1
+```typescript
+function WrapIn<T>(item:T):T[]{
+    return [item]
+}
+```
+In this example, the `WrapIn` function is a generic function that takes a parameter of type `T` and returns an array of type `T[]`. This allows the function to work with any data type while ensuring that the returned array contains elements of the same type as the input.
+
+Example: 2
+```typescript
+function pair<A,B>(a:A,b:B):[A,B]{
+    return[a,b]
+}
+pair("hello","hola")
+pair("hello",20)
+pair(20,"hello")
+pair(12,{name:"kirtan"})
+```
+In this example, the `pair` function is a generic function that takes two parameters of different types, `A` and `B`, and returns a tuple containing both values. This allows the function to create pairs of any two types while maintaining type safety.
+
+#### Interface with Generrics
+
+Example: 1
+```typescript
+interface Box<T>{
+    contents:T
+}
+const numberBox:Box<string>={
+    contents:"kirtan the typescript learner"
+}
+const numberBoxCup:Box<number>={
+    contents:10
+}
+```
+Example: 2
+```typescript
+// @real world example
+interface ApiResponse<T>{
+    status:number,
+    data:T
+}
+const res:ApiResponse<{player:string}> = {
+    status:200,
+    data : {player:"Fede Valverde"}
+}
+```
+In this example, we define a generic interface `Box<T>` that has a property `contents` of type `T`. We then create two instances of `Box`: one for `string` contents and another for `number` contents. This demonstrates how generics allow for the creation of flexible and reusable interfaces that can work with different data types while maintaining type safety.
+
+In the second example, we define a generic interface `ApiResponse<T>` that represents the structure of an API response, with a `status` property and a `data` property of type `T`. We then create an instance of `ApiResponse` where the `data` property is an object containing a `player` string. This showcases how generics can be used in real-world scenarios to create type-safe data structures for various use cases.
+
+## Axios with TypeScript:
+Using Axios with TypeScript: Axios is a popular HTTP client library that can be used with TypeScript to make type-safe API requests.

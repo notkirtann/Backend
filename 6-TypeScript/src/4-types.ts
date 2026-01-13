@@ -101,3 +101,6 @@ const Cfg:Config={
     age:22
 }
 /*# Cfg.name="MaiKirtanHoon" */ //@ above will give error as it is readonly
+
+
+// console.log(1426-(354+423+310)); --> aligarh house bill (10 Jan 26)
