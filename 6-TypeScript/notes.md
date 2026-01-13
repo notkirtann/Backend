@@ -1018,3 +1018,56 @@ In the second example, we define a generic interface `ApiResponse<T>` that repre
 
 ## Axios with TypeScript:
 Using Axios with TypeScript: Axios is a popular HTTP client library that can be used with TypeScript to make type-safe API requests.
+
+```typescript
+import axios, { type AxiosResponse } from 'axios';
+
+interface RandomUser{
+    results:[]
+    info:{}
+}
+const fetchData = async(url:string)=>{
+    try {
+        const res:AxiosResponse<RandomUser> = await axios.get(url) //@assigning axios respose as datatype provides suggestion what all api res have
+        console.log(res.data.results); 
+        //@like res.data res.status res.config etc. etc. 
+    } catch (e:any) {
+        if(axios.isAxiosError(e)){
+            console.log(e.message);
+            if(e.response?.status){
+                console.log(e.response);
+            }
+        }
+    }
+}
+fetchData('https://randomuser.me/api/')
+```
+In this example, we define an interface `RandomUser` to represent the structure of the API response from the Random User API. We then use Axios to make a GET request to the specified URL, specifying the response type as `AxiosResponse<RandomUser>`. This allows TypeScript to provide type safety and autocompletion for the response data. We also include error handling that checks if the error is an Axios error and logs relevant information. This demonstrates how to effectively use Axios with TypeScript for making type-safe API requests.
+
+## Fetch API with TypeScript:
+Using Fetch API with TypeScript: The Fetch API can be used with TypeScript to make type-safe HTTP requests.
+
+```typescript
+interface JsonPlaceHolderApi{
+    userId:number,
+    id:number,
+    title:string,
+    completed:boolean
+}
+
+const fetchData = async(url:string)=>{
+    try {
+        const res = await fetch(url)
+        if(!res.ok){
+            throw new Error(`HTTP error ${res.status}`)
+        }
+        const data:JsonPlaceHolderApi = await res.json()
+        console.log(data); 
+    } catch (e:any) {
+       console.log(e.message);
+    }
+}
+fetchData('https://randomuser.me/api/')
+
+```
+In this example, we define an interface `JsonPlaceHolderApi` to represent the structure of the API response from the JSON Placeholder API. We then use the Fetch API to make a GET request to the specified URL. After checking if the response is okay, we parse the JSON data and assign it to a variable of type `JsonPlaceHolderApi`. This ensures that the data conforms to the expected structure, providing type safety and autocompletion in TypeScript. We also include error handling to catch and log any errors that may occur during the fetch operation. This demonstrates how to effectively use the Fetch API with TypeScript for making type-safe HTTP requests.
