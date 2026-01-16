@@ -5,7 +5,7 @@ const router: Router = express.Router();
 
 router.get('/', controllers.getAllBooks);
 router.get('/:id', controllers.getBookByID);
-router.post('/', controllers.createBook);
+router.post('/create', controllers.createBook);
 router.delete('/:id', controllers.deleteBook);
 
 export default router;
