@@ -1,12 +1,34 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "target": "esnext",
-    "moduleResolution": "nodenext",
-    "rootDir": "src",
-    "outDir": "dist",
+    /* Target & Module System */
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext"],
+    "types": ["node"], // Requires: npm install -D @types/node
+
+    /* File Layout */
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "removeComments": true,
+
+    /* Strictness & Safety */
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitAny": true,
+
+    /* Emit & Interop */
+    "sourceMap": true,
+    "declaration": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    /* Modern Node features */
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }

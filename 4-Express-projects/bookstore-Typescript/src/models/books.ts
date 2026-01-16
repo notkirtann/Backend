@@ -1,10 +1,10 @@
-export interface Books{
-    id:number,
-    title:string,
-    author:string
+export interface Books {
+  id: number;
+  title: string;
+  author: string;
 }
 
-const books:Books[] = [
+const books: Books[] = [
   { id: 1, title: 'Book One', author: 'Author One' },
   { id: 2, title: 'Book Two', author: 'Author Two' },
 ];
