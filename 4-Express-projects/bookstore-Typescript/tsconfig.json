@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    /* Target & Module System */
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": ["ESNext"],
-    "types": ["node"], // Requires: npm install -D @types/node
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["node"],
 
     /* File Layout */
     "rootDir": "./src",
@@ -26,9 +25,12 @@
     "skipLibCheck": true,
 
     /* Modern Node features */
-    "verbatimModuleSyntax": true,
     "isolatedModules": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }
