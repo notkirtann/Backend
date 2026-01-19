@@ -1,6 +1,7 @@
 import {type Request, type Response } from 'express';
 import db from '../db/index.js';
 import { BookModel } from '../models/book.model.js';
+import { eq } from 'drizzle-orm';
 
 type Books={
   id:any,
@@ -26,7 +27,7 @@ const getBookByID = async (req: Request, res: Response): Promise<void> => {
     const book = await db
       .select()
       .from(BookModel)
-      .where((table)=>eq(table.id, id))
+      .where(eq(BookModel.id, id))
       .limit(1);
 
     if (!book || book.length === 0) {
