@@ -6,13 +6,13 @@ async function getAllUser(req, res) {
     res.json(users)
 }
 
-async function createUser({id, name,email}) {
+async function createUser({id, name,age,email}) {
     await db.insert(userTable).values({
-        id,name,email
+        id,name,age,email
     })
 }
 
 export {
     getAllUser,createUser
 }
-createUser({"name":"Kirtan","age":22,"email":"contactmebhai@gmail.com"})
+// createUser({"name":"Kirtan","age":22,"email":"contactmebhai@gmail.com"})
