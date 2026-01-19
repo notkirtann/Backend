@@ -1,5 +1,6 @@
 import {type Request, type Response } from 'express';
-import { BookModel } from '../models/book.model';
+import db from '../db/index.js';
+import { BookModel } from '../models/book.model.js';
 
 type Books={
   id:any,
@@ -8,69 +9,91 @@ type Books={
   authorID:any
 }
 
-const getAllBooks = (req: Request, res: Response): void => {
-  res.json(BookModel);
+const getAllBooks = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const books = await db.select().from(BookModel);
+    res.json(books);
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    res.status(500).json({ error: 'Failed to fetch books' });
+  }
 };
 
-const getBookByID = (req: Request, res: Response): void => {
-  const id: number = parseInt(req.params.id as string, 10);
+const getBookByID = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
 
-  if (isNaN(id)) {
-    res.status(400).json({ error: 'id must be of type number' });
-    return;
+    const book = await db
+      .select()
+      .from(BookModel)
+      .where((table)=>eq(table.id, id))
+      .limit(1);
+
+    if (!book || book.length === 0) {
+      res.status(404).json({ error: `Book with id ${id} does not exist` });
+      return;
+    } 
+
+    res.json(book[0]);
+  } catch (error) {
+    console.error('Error fetching book:', error);
+    res.status(500).json({ error: 'Failed to fetch book' });
   }
-
-  const book = BookModel.find((b: Books) => b.id === id);
-
-  if (!book) {
-    res.status(404).json({ error: `Book with id ${id} does not exist` });
-    return;
-  }
-
-  res.json(book);
 };
 
-const createBook = (req: Request, res: Response): void => {
-  const { title, author } = req.body as {
-    title?: string;
-    author?: string;
-  };
+const createBook = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { title, description, authorId } = req.body as {
+      title?: string;
+      description?: string;
+      authorId?: string;
+    };
 
-  if (!title || !author) {
-    res.status(400).json({
-      error: 'Both title and author are required.',
+    if (!title || !authorId) {
+      res.status(400).json({
+        error: 'Both title and authorId are required.',
+      });
+      return;
+    }
+
+    const newBook = await db
+      .insert(BookModel)
+      .values({
+        title,
+        description: description || null,
+        authorId,
+      })
+      .returning();
+
+    res.status(201).json({
+      message: 'Book created successfully',
+      book: newBook[0],
     });
-    return;
+  } catch (error) {
+    console.error('Error creating book:', error);
+    res.status(500).json({ error: 'Failed to create book' });
   }
-
-  const id: number = BookModel.length + 1;
-
-  const book = { id, title, author };
-  // BookModel.push(book);
-
-  res.status(201).json({
-    message: 'Book Created success',
-    id,
-  });
 };
 
-const deleteBook = (req: Request, res: Response): void => {
-  const id: number = parseInt(req.params.id as string, 10);
+const deleteBook = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
 
-  if (isNaN(id)) {
-    res.status(400).json({ error: 'id must be of type number' });
-    return;
+    const deletedBook = await db
+      .delete(BookModel)
+      .where(eq(BookModel.id, id))
+      .returning();
+
+    if (!deletedBook || deletedBook.length === 0) {
+      res.status(404).json({ error: `Book with id ${id} not found` });
+      return;
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    res.status(500).json({ error: 'Failed to delete book' });
   }
-
-  const indexToDelete = BookModel.findIndex((book: Books) => book.id === id);
-
-  if (indexToDelete === -1) {
-    res.status(404).json({ error: `Book with ID ${id} not found.` });
-    return;
-  }
-
-  // BookModel.splice(indexToDelete, 1);
-  res.status(204).send();
 };
 
 export default {
