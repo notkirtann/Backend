@@ -5,5 +5,14 @@ services:
       - 5432:5432
     environment:
       POSTGRES_DB: mydb
-      POSTGRES_USER: notkirtann
-      POSTGRES_PASSWORD: notkirtann
+      POSTGRES_USER_FILE: run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+      - db_user
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_user:
+    file: ./secrets/db_admin.txt

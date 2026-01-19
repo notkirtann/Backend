@@ -6,14 +6,15 @@
   "author": "Kirtan Nahar",
   "type": "module",
   "main": "src/server.js",
-   "scripts": {
+  "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
-},
+  },
   "dependencies": {
     "dotenv": "^17.2.3",
-    "drizzle-orm": "^0.45.1",
     "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
     "pg": "^8.17.1"
   }
 }
