@@ -1,10 +1,18 @@
 import db from'../db/index.js';
 import {userTable} from '../../drizzle/schema.js'
 
-async function getAllUser() {
-    const user = db.select().from(userTable)
+async function getAllUser(req, res) {
+    const users = await db.select().from(userTable)
+    res.json(users)
+}
+
+async function createUser({id, name,email}) {
+    await db.insert(userTable).values({
+        id,name,email
+    })
 }
 
 export {
-    getAllUser
+    getAllUser,createUser
 }
+createUser({"name":"Kirtan","age":22,"email":"contactmebhai@gmail.com"})
