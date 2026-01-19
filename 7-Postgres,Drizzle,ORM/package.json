@@ -1,0 +1,19 @@
+{
+  "name": "learning-drizzle",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Kirtan Nahar",
+  "type": "module",
+  "main": "src/server.js",
+   "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+},
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-kit": "^0.31.8",
+    "pg": "^8.17.1"
+  }
+}
