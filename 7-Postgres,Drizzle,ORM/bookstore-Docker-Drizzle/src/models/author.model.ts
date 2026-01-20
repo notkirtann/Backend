@@ -1,6 +1,6 @@
 import {varchar,uuid,integer, pgTable} from 'drizzle-orm/pg-core'
 
-const authorTable = pgTable('author',{
+const authorModel = pgTable('author',{
     id: uuid().primaryKey().defaultRandom(),
     firstName: varchar({length:55}).notNull(),
     lastName:varchar({length:55}),
@@ -8,5 +8,5 @@ const authorTable = pgTable('author',{
 })
 
 export {
-    authorTable
+    authorModel
 }

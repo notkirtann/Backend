@@ -1,7 +1,7 @@
 import {type Request, type Response } from 'express';
 import db from '../db/index.js';
-import { BookModel } from '../models/book.model.js';
-import { eq } from 'drizzle-orm';
+import { BookModel,authorModel } from '../models/allModel';
+import { eq,ilike } from 'drizzle-orm';
 
 type Books={
   id:any,
@@ -12,6 +12,13 @@ type Books={
 
 const getAllBooks = async (req: Request, res: Response): Promise<void> => {
   try {
+    const { search } = req.query;
+
+    if (typeof search === 'string' && search.trim() !== '') {
+      const books = await db.select().from(BookModel).where(ilike(BookModel.title, `%${search}%`));
+      res.json(books);
+      return;
+    }
     const books = await db.select().from(BookModel);
     res.json(books);
   } catch (error) {
@@ -27,7 +34,8 @@ const getBookByID = async (req: Request, res: Response): Promise<void> => {
     const book = await db
       .select()
       .from(BookModel)
-      .where(eq(BookModel.id, id))
+      .where(eq(BookModel.id, id as string))
+      .leftJoin(authorModel,eq(BookModel.authorId,authorModel.id))
       .limit(1);
 
     if (!book || book.length === 0) {
@@ -82,7 +90,7 @@ const deleteBook = async (req: Request, res: Response): Promise<void> => {
 
     const deletedBook = await db
       .delete(BookModel)
-      .where(eq(BookModel.id, id))
+      .where(eq(BookModel.id, id as string))
       .returning();
 
     if (!deletedBook || deletedBook.length === 0) {
