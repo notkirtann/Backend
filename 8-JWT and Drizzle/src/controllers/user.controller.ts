@@ -1,19 +1,18 @@
 import db from '../db/index.js'
-import {usersTable} from '../models/user.model.js'
+import {usersTable,userSession} from '../models/user.model.js'
 import type { Response, Request } from 'express'
 import { eq } from 'drizzle-orm'
 import { createHmac, randomBytes } from 'node:crypto'
-import { error } from 'node:console'
 
 const createUser = async function (req:Request,res:Response) {
     const {email,name,password} = req.body
 
-    const existingUser = await db
+    const [existingUser] = await db
         .select({email:usersTable.email})
         .from(usersTable)
         .where((table)=> eq(table.email, email))
     
-    if(existingUser.length>0){
+    if(existingUser){
         return res.status(400).json({error:"User already exist"})
     }
 
@@ -36,6 +35,7 @@ const loginUser = async (req:Request,res:Response)=>{
 
     const [existingUser] = await db
         .select({
+            id:usersTable.id,
             email:usersTable.email,
             salt :usersTable.salt,
             password:usersTable.password
@@ -57,7 +57,11 @@ const loginUser = async (req:Request,res:Response)=>{
     }
 
     //@ genratring a session for a user 
+    const [session] = await db.insert(userSession)
+                    .values({userId:existingUser.id})
+                    .returning({id:userSession.id})
 
+    return res.json({result:"success",sessionId:session?.id})
 }
 export {
     createUser,

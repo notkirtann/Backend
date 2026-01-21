@@ -1,5 +1,4 @@
-import { timestamp } from "drizzle-orm/gel-core";
-import { integer, pgTable, varchar,uuid,text } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar,uuid,text,timestamp } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: uuid().primaryKey().defaultRandom(),
@@ -9,7 +8,7 @@ export const usersTable = pgTable("users", {
   salt:text().notNull()
 });
 
-export const userSession = pgTable("user-session",{
+export const userSession = pgTable("user_session",{
   id: uuid().primaryKey().defaultRandom(),
   userId:uuid().references(()=>usersTable.id).notNull(),
   createdAt:timestamp().defaultNow().notNull()
