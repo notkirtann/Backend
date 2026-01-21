@@ -3,6 +3,7 @@ import {usersTable} from '../models/user.model.js'
 import type { Response, Request } from 'express'
 import { eq } from 'drizzle-orm'
 import { createHmac, randomBytes } from 'node:crypto'
+import { error } from 'node:console'
 
 const createUser = async function (req:Request,res:Response) {
     const {email,name,password} = req.body
@@ -10,9 +11,9 @@ const createUser = async function (req:Request,res:Response) {
     const existingUser = await db
         .select({email:usersTable.email})
         .from(usersTable)
-        .where((table)=> eq(email,table.email))
+        .where((table)=> eq(table.email, email))
     
-    if(existingUser){
+    if(existingUser.length>0){
         return res.status(400).json({error:"User already exist"})
     }
 
@@ -30,6 +31,35 @@ const createUser = async function (req:Request,res:Response) {
     return res.status(201).json({status:"success",data:{userId:user?.id}})
 }
 
+const loginUser = async (req:Request,res:Response)=>{
+    const {email,password} = req.body
+
+    const [existingUser] = await db
+        .select({
+            email:usersTable.email,
+            salt :usersTable.salt,
+            password:usersTable.password
+        })
+        .from(usersTable)
+        .where((table)=> eq(table.email, email))
+    
+    if(!existingUser){
+        return res.status(404).json({error:"User doesn't exist"})
+    }
+    
+    const salt = existingUser.salt
+    const existingHash = existingUser.password
+
+    const newHash= createHmac('sha256',salt).update(password).digest('hex')
+
+    if(newHash !== existingHash){
+        return res.json({error:"Please enter the correct password"})
+    }
+
+    //@ genratring a session for a user 
+
+}
 export {
-    createUser
+    createUser,
+    loginUser
 }
