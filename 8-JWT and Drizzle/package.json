@@ -8,8 +8,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/server.ts",
-    "start": "node ./dis/server.js",
-    "build": "npx tsc"
+    "start": "node ./dist/server.js",
+    "build": "npx tsc",
+    "doc.d" : "docker compose down",
+    "doc.u" : "docker compose up -d",
+    "dr.push": "npx drizzle-kit push",
+    "dr.studio": "npx drizzle-kit studio"
   },
   "dependencies": {
     "chalk": "^5.6.2",
