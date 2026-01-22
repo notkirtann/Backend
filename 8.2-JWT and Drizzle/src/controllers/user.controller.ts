@@ -1,5 +1,5 @@
 import db from '../db/index.js'
-import {usersTable} from '../models/user.model'
+import {usersTable} from '../models/user.model.js'
 import type { Response, Request } from 'express'
 import { eq } from 'drizzle-orm'
 import { createHmac, randomBytes } from 'node:crypto'
