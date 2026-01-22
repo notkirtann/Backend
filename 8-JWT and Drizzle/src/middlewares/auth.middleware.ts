@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
 import type { Request,Response,NextFunction } from 'express';
 
 export const authenticationMiddleware = async function (req:Request, res:Response, next:NextFunction) {

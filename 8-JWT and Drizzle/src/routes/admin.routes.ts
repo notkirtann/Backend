@@ -1,6 +1,6 @@
 import express from 'express';
 import db from '../db/index.js';
-import { usersTable } from '../models/user.model.js';
+import { usersTable } from '../models/user.model';
 import {
   ensureAuthenticated,
   restrictToRole,

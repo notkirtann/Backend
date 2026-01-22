@@ -11,6 +11,8 @@
     "outDir": "./dist",
     "removeComments": true,
 
+    "allowSyntheticDefaultImports": true,
+
     /* Strictness & Safety */
     "strict": true,
     "noUncheckedIndexedAccess": true,

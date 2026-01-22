@@ -1,5 +1,5 @@
-import chalk from 'chalk';
 import 'dotenv/config';
+import chalk from 'chalk';
 import { drizzle } from 'drizzle-orm/node-postgres';
 
 //@ postgres://<username>:<password>@host:<port>/<db_name>

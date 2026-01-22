@@ -1,9 +1,9 @@
 import db from '../db/index.js'
-import {usersTable,userSessions} from '../models/user.model.js'
+import {usersTable} from '../models/user.model'
 import type { Response, Request } from 'express'
 import { eq } from 'drizzle-orm'
 import { createHmac, randomBytes } from 'node:crypto'
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken')
 
 const createUser = async function (req:Request,res:Response) {
     const {email,name,password} = req.body
