@@ -40,7 +40,7 @@ export const ensureAuthenticated = async function (req:Request, res:Response, ne
 
 export const restrictToRole = function (role: 'USER' | 'ADMIN') {
   return function (req:Request, res:Response, next:NextFunction) {
-    if (req.user.role !== role) {
+    if (!req.user || req.user.role !== role) {
       return res
         .status(401)
         .json({ error: 'You are not authorized to access this resource' });

@@ -56,7 +56,7 @@ const loginUser = async (req:Request,res:Response)=>{
     const newHash= createHmac('sha256',salt).update(password).digest('hex')
 
     if(newHash !== existingHash){
-        return res.json({error:"Please enter the correct password"})
+        return res.status(401).json({error:"Please enter the correct password"})
     }
 
     const payload = {
@@ -66,14 +66,14 @@ const loginUser = async (req:Request,res:Response)=>{
         role: existingUser.role,
       };
     
-      const token = jwt.sign(payload, process.env.JWT_SECRET);
+      const token = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '7d' });
     
       return res.json({ status: 'success', token });
 }
 
 const updateUser = async (req:Request,res:Response) => {
   const { name } = req.body;
-  await db.update(usersTable).set({ name }).where(eq(usersTable.id, req.user.id));
+  await db.update(usersTable).set({ name }).where(eq(usersTable.id, req.user!.id));
   return res.json({ status: 'success' });
 }
 
