@@ -1,7 +1,12 @@
 import express, { type Router } from 'express'
-import {createUser, loginUser} from '../controllers/user.controller.js'
+import {createUser, loginUser, updateUser,getUser} from '../controllers/user.controller.js'
+import { ensureAuthenticated } from '../middlewares/auth.middleware.js';
 
 const router:Router = express.Router()
+
+router.patch('/', ensureAuthenticated, updateUser);
+
+router.get('/', ensureAuthenticated, getUser)
 
 router.post('/signup',createUser)
 

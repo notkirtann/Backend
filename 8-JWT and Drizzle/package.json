@@ -10,8 +10,8 @@
     "dev": "nodemon ./src/server.ts",
     "start": "node ./dist/server.js",
     "build": "npx tsc",
-    "doc.d" : "docker compose down",
-    "doc.u" : "docker compose up -d",
+    "doc.d": "docker compose down",
+    "doc.u": "docker compose up -d",
     "dr.push": "npx drizzle-kit push",
     "dr.studio": "npx drizzle-kit studio"
   },
@@ -21,6 +21,7 @@
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.17.1",
     "typescript": "^5.9.3"
   },

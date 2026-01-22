@@ -1,8 +1,9 @@
 import db from '../db/index.js'
-import {usersTable,userSession} from '../models/user.model.js'
+import {usersTable,userSessions} from '../models/user.model.js'
 import type { Response, Request } from 'express'
 import { eq } from 'drizzle-orm'
 import { createHmac, randomBytes } from 'node:crypto'
+import jwt from 'jsonwebtoken';
 
 const createUser = async function (req:Request,res:Response) {
     const {email,name,password} = req.body
@@ -37,7 +38,9 @@ const loginUser = async (req:Request,res:Response)=>{
         .select({
             id:usersTable.id,
             email:usersTable.email,
+            name: usersTable.name,
             salt :usersTable.salt,
+            role: usersTable.role,
             password:usersTable.password
         })
         .from(usersTable)
@@ -56,14 +59,31 @@ const loginUser = async (req:Request,res:Response)=>{
         return res.json({error:"Please enter the correct password"})
     }
 
-    //@ genratring a session for a user 
-    const [session] = await db.insert(userSession)
-                    .values({userId:existingUser.id})
-                    .returning({id:userSession.id})
-
-    return res.json({result:"success",sessionId:session?.id})
+    const payload = {
+        id: existingUser.id,
+        email: existingUser.email,
+        name: existingUser.name,
+        role: existingUser.role,
+      };
+    
+      const token = jwt.sign(payload, process.env.JWT_SECRET);
+    
+      return res.json({ status: 'success', token });
 }
+
+const updateUser = async (req:Request,res:Response) => {
+  const { name } = req.body;
+  await db.update(usersTable).set({ name }).where(eq(usersTable.id, user.id));
+
+  return res.json({ status: 'success' });
+}
+const getUser =async (req:Request,res:Response) => {
+  return res.json({ user });
+}
+
 export {
     createUser,
-    loginUser
+    loginUser,
+    updateUser,
+    getUser
 }
