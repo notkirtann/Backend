@@ -73,12 +73,12 @@ const loginUser = async (req:Request,res:Response)=>{
 
 const updateUser = async (req:Request,res:Response) => {
   const { name } = req.body;
-  await db.update(usersTable).set({ name }).where(eq(usersTable.id, user.id));
-
+  await db.update(usersTable).set({ name }).where(eq(usersTable.id, req.user.id));
   return res.json({ status: 'success' });
 }
-const getUser =async (req:Request,res:Response) => {
-  return res.json({ user });
+
+const getUser = async (req:Request,res:Response) => {
+  return res.json({ user: req.user });
 }
 
 export {

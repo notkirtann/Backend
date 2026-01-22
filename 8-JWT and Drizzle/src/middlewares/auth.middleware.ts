@@ -17,8 +17,13 @@ export const authenticationMiddleware = async function (req:Request, res:Respons
 
     const token = tokenHeader.split(' ')[1];
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+    id: string;
+    email: string;
+    name: string;
+    role: 'USER' | 'ADMIN';
+  };
+req.user = decoded;
     next();
   } catch (error) {
     next();
@@ -33,14 +38,13 @@ export const ensureAuthenticated = async function (req:Request, res:Response, ne
   next();
 };
 
-export const restrictToRole = function (role) {
+export const restrictToRole = function (role: 'USER' | 'ADMIN') {
   return function (req:Request, res:Response, next:NextFunction) {
     if (req.user.role !== role) {
       return res
         .status(401)
         .json({ error: 'You are not authorized to access this resource' });
     }
-
     return next();
   };
 };
