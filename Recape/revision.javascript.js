@@ -258,5 +258,109 @@ myArr2.forEach(i=>{
 })
 myArr.forEach( (val, index,arr) => {
     console.log(`value is ${val} and index is ${index} and array is ${arr}`);
-})
+})//dont return anything
 
+
+//! FILTER (new array)
+const answer = myArr.filter((num)=>{
+    return isNaN(num)
+})
+console.log(answer);
+
+const books = [
+    {title:"Book One", author:"kirtan", year:2002, rating:4.5},
+    {title:"Book Two", author:"ronaldo", year:2010, rating:4.9},
+    {title:"Book Three", author:"messi", year:2005, rating:3.5},
+    {title:"Book Four", author:"neymar", year:2015, rating:4.8},
+    {title:"Book Five", author:"mbappe", year:2020, rating:4.2},
+    {title:"Book Six", author:"salah", year:2021, rating:3.9}
+]
+
+const userBooks = books.filter((bk)=>{
+    return bk.year>2005 && bk.rating >4.0
+})
+console.log(userBooks);
+
+// !mapping
+const myNumbers = [1,2,3,4,5,6,7,8,9]
+
+const mapping = myNumbers.map(num=>num*5)
+console.log(mapping);
+
+//!chaning
+
+const chaning = myNumbers.map(num=>num*5)
+                         .map(num=>num+3)
+                         .filter(num=>num%2==0)
+                         .map(num=>num+1)
+console.log(chaning);
+
+//!reduce
+const total = myNumbers.reduce((acc,val)=>{
+    return acc+val;
+});
+console.log(total);
+
+const shoppingCart = [
+    {product:"laptop", price:38374},
+    {product:"mobile", price:36482},
+    {product:"tv", price:25683},
+    {product:"headphone", price:5538},
+]
+const bill = shoppingCart.reduce((acc,curr)=>acc+curr.price,0)
+console.log(bill);
+
+//!find 
+const find = myNumbers.find((num)=>num>5)
+console.log(find); //return how many match to condition
+
+//! findIndex method
+const findIndex = myNumbers.findIndex((num) => num > 5)
+console.log(findIndex);
+
+
+
+console.log('\n\n\n advance begins\n');
+// -----------------------08 adv---------------
+
+const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        const success = true;
+        resolve({username:"Kirtan",email:'kirtan.com'}) 
+    }, 1000);
+});
+promise1
+.then((data) => {
+    console.log("User Data:", data);
+})
+.finally(()=>{
+    console.log("promise 3 completed")
+});
+
+
+const promiseTwo = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        const success = false;
+       if(success){
+        resolve({username:"Kirtan",email:'kirtan.com'});
+       } else {
+        reject("Promise Four Rejected");
+       }    
+    }, 2000);
+});
+promiseTwo
+.then((user) => {
+    return user.username;
+})
+.then((username) => {
+    console.log("Username:", username);
+})
+.catch((error)=>{
+    console.error("Error:", error);
+})
+.finally(()=>{
+    console.log("Promise Four Completed");
+});
+
+
+console.log(eval(promise1));
