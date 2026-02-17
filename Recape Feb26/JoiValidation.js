@@ -1,6 +1,6 @@
-const Joi = require('joi');
+import Joi from 'Joi'
 
-const schema = Joi.object({
+const userFields = {
     username: Joi.string()
         .alphanum()
         .min(3)
@@ -8,14 +8,14 @@ const schema = Joi.object({
         .required(),
 
     password: Joi.string()
-        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+        .pattern(/^[a-zA-Z0-9]{3,30}$/),
 
     repeat_password: Joi.ref('password'),
 
-    access_token: [
+    access_token: Joi.alternatives().try(
         Joi.string(),
         Joi.number()
-    ],
+    ),
 
     birth_year: Joi.number()
         .integer()
@@ -24,11 +24,20 @@ const schema = Joi.object({
 
     email: Joi.string()
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-})
+};
+
+const userSchema = Joi.object(userFields)
     .with('username', 'birth_year')
     .xor('password', 'access_token')
     .with('password', 'repeat_password');
 
+export {userFields,userSchema}
+
+
+const loginSchema = Joi.object({
+    username: userFields.username.required(),
+    password: userFields.password.required()
+})
 
 schema.validate({ username: 'abc', birth_year: 1994 });
 // -> { value: { username: 'abc', birth_year: 1994 } }
