@@ -1,0 +1,26 @@
+{
+  "name": "aggregation-pipline-mongose",
+  "version": "1.0.0",
+  "description": "trying to use aggregation using mongoose",
+  "keywords": [
+    "MongoDB",
+    "JavaScript",
+    "Mongoose",
+    "Routes",
+    "Controllers"
+  ],
+  "license": "ISC",
+  "author": "Kirtan Nahar",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon ./src/server.js"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "mongoose": "^9.2.1"
+  }
+}
