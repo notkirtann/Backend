@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
+const salesSchema = new mongoose.Schema({
     _id: {
         type: Number  
     },
@@ -23,6 +23,6 @@ const orderSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", salesSchema);
 
 export default Order;

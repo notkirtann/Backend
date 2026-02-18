@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import express from "express";
-import connectDB from './db/db.js';
+import connectDB from './db/connection.js';
 import chalk from 'chalk';
 import shopRoutes from './routes/shop.js'
 
