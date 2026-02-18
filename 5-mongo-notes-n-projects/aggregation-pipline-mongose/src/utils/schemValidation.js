@@ -51,7 +51,7 @@ const postSchema = Joi.object({
 });
 
 const salesSchema = Joi.object({
-    _id: Joi.number().optional(),
+    _id: Joi.number().required(),
     quantity: Joi.number().min(0).required(),
     price: Joi.number().min(0).required(),
     targetPrice: Joi.number().min(0).required()

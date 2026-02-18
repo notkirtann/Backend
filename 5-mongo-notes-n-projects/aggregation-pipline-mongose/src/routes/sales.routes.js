@@ -9,6 +9,11 @@ import { salesSchema } from "../utils/schemValidation.js";
 
 const router = express.Router();
 
+router.get("/agg/revenue", getTotalRevenue);
+router.get("/agg/profit", getProfitAnalysis);
+router.get("/agg/below-target", getBelowTargetOrders);
+router.get("/agg/quantity", getQuantityStats);
+
 router
     .route("/")
     .post(validate(salesSchema), createOrder)
@@ -19,11 +24,5 @@ router
     .get(getOrderById)
     .put(updateOrder)
     .delete(deleteOrder);
-
-router.get("/agg/revenue", getTotalRevenue);
-router.get("/agg/profit", getProfitAnalysis);
-router.get("/agg/below-target", getBelowTargetOrders);
-router.get("/agg/quantity", getQuantityStats);
-
 
 export default router;
