@@ -5,10 +5,21 @@ import {
   createProduct,
   getProductById,
   getProducts,
+  getProductsByCompany,
+  getProductsByFeatureStatus,
+  getProductsPriceGreater,
+  groupProductsByCategory,
+  priceComparisonByCategory,
   updateProduct,
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
+
+router.get("/agg/gt", getProductsPriceGreater);
+router.get("/agg/company/:companyId", getProductsByCompany);
+router.get("/agg/featured", getProductsByFeatureStatus);
+router.get("/agg/group-by-cat", groupProductsByCategory);
+router.get("/agg/price-comp", priceComparisonByCategory);
 
 router
   .route("/")
