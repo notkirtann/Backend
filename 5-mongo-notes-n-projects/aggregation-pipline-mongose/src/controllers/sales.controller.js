@@ -84,7 +84,6 @@ export const getTotalRevenue = async (req, res) => {
   }
 };
 
-
 export const getProfitAnalysis = async (req, res) => {
   try {
     const result = await Sales.aggregate([
@@ -116,7 +115,6 @@ export const getProfitAnalysis = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 export const getBelowTargetOrders = async (req, res) => {
   try {

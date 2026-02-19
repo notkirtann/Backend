@@ -26,6 +26,10 @@ router
   .post(validate(salesSchema), createOrder)
   .get(validate(salesSchema), getOrders);
 
-router.route("/:id").get(getOrderById).put(updateOrder).delete(deleteOrder);
+router
+  .route("/:id")
+  .get(getOrderById)
+  .put(updateOrder)
+  .delete(deleteOrder);
 
 export default router;
