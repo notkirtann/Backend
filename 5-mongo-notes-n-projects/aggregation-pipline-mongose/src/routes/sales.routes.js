@@ -1,7 +1,14 @@
 import express from "express";
-import { 
-    createOrder, getOrders, getOrderById, updateOrder, deleteOrder, 
-    getTotalRevenue, getProfitAnalysis, getBelowTargetOrders, getQuantityStats,
+import {
+  createOrder,
+  getOrders,
+  getOrderById,
+  updateOrder,
+  deleteOrder,
+  getTotalRevenue,
+  getProfitAnalysis,
+  getBelowTargetOrders,
+  getQuantityStats,
 } from "../controllers/sales.controller.js";
 
 import { validate } from "../middleware/validate.js";
@@ -15,14 +22,10 @@ router.get("/agg/below-target", getBelowTargetOrders);
 router.get("/agg/quantity", getQuantityStats);
 
 router
-    .route("/")
-    .post(validate(salesSchema), createOrder)
-    .get(validate(salesSchema), getOrders);
+  .route("/")
+  .post(validate(salesSchema), createOrder)
+  .get(validate(salesSchema), getOrders);
 
-router
-    .route("/:id")
-    .get(getOrderById)
-    .put(updateOrder)
-    .delete(deleteOrder);
+router.route("/:id").get(getOrderById).put(updateOrder).delete(deleteOrder);
 
 export default router;

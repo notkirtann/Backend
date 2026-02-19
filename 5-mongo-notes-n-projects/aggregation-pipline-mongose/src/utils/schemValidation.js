@@ -24,7 +24,7 @@ const productSchema = Joi.object({
     isFeature: Joi.boolean().optional()
 });
 
-const colSchema = Joi.object({
+const docSchema = Joi.object({
     name: requiredString,
     values: Joi.array().items(Joi.number()).min(1).required()
 });
@@ -59,7 +59,7 @@ const salesSchema = Joi.object({
 
 export{
     categorySchema,
-    colSchema,
+    docSchema,
     postSchema,
     companySchema,
     productSchema,
