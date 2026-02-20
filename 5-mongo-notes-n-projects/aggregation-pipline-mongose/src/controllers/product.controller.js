@@ -12,10 +12,44 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.status(201).json({ success: true, data: products });
+    
+    let { page = 1, limit = 100, sort = "asc" } = req.query;
+
+    page = Number(page);
+    limit = Number(limit);
+
+    let sortOption = {};
+    if (sort === "asc") {
+      sortOption.price = 1;
+    } else if (sort === "desc") {
+      sortOption.price = -1;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const totalProducts = await Product.countDocuments();
+
+    const products = await Product.find()
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit)
+      .populate("company", "name")
+      .populate("category", "name");
+
+    res.status(200).json({
+      success: true,
+      total: totalProducts,
+      page,
+      limit,
+      totalPages: Math.ceil(totalProducts / limit),
+      data: products
+    });
+
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
 
